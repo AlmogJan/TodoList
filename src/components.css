@@ -1,0 +1,5 @@
+/* Pages */
+@import "./pages/Home/Home.css";
+/* Components */
+@import "./components/AppHeader/AppHeader.css";
+@import "./components/UserMsg/UserMsg.css";
