@@ -1,19 +1,24 @@
 const { useSelector, useDispatch } = ReactRedux;
 const { useState } = React;
 import { TodoList } from "../../components/TodoList/TodoList.jsx";
-import { PUT_TODO, DELETE_TODO } from "../../../store/store.js";
+import { PUT_TODO, DELETE_TODO, POST_TODO } from "../../../store/store.js";
+import { todoService } from "../../services/todo.service.js";
 
 export function TodoApp() {
   const dispatch = useDispatch();
   const todoList = useSelector((state) => state.todoList);
   const [addMode, setAddMode] = useState(null);
-  const [newTodo, setNewTodo] = useState();
+  const [newTodoTitle, setNewTodoTitle] = useState("");
 
   function onTodoEdit(todo) {
     dispatch({ type: PUT_TODO, todo });
   }
   function onTodoDelete(todo) {
     dispatch({ type: DELETE_TODO, todo });
+  }
+  function onAddTodo(todo) {
+    console.log(todo);
+    dispatch({ type: POST_TODO, todo });
   }
   function handleChange({ target }) {
     const field = target.name;
@@ -34,10 +39,11 @@ export function TodoApp() {
         break;
     }
 
-    setNewTodo((prevNewTodo) => ({
-      ...prevNewTodo,
+    setNewTodoTitle((prevNewTodoTitle) => ({
+      ...prevNewTodoTitle,
       [field]: value,
     }));
+    console.log(newTodoTitle);
   }
   return (
     <div>
@@ -50,14 +56,15 @@ export function TodoApp() {
         <form
           onSubmit={(ev) => {
             ev.preventDefault();
-            onAddTodo({ ...todoList, newTodo });
+            onAddTodo(todoService.createTodo(newTodoTitle.title));
+            setAddMode(null);
           }}
         >
-          <input type="text" name="new-todo" onChange={handleChange} />
+          <input type="text" name="title" onInput={handleChange} />
           <button>Submit</button>
         </form>
       ) : (
-        <button onClick={() => setAddMode(true)}>'Add'</button>
+        <button onClick={() => setAddMode(true)}>Add</button>
       )}
     </div>
   );

@@ -42,7 +42,7 @@ export function TodoPreview({ todo, isEditMode, onEditSubmit }) {
   ) : (
     <div>
       <h4>{!todo.isDone ? todo.title : "done"}</h4>
-      <p>{todo.createdAt.toString()}</p>
+      <p>{todo.createdAt.toLocaleString()}</p>
     </div>
   );
 }

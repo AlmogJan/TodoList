@@ -49,7 +49,7 @@ function appReducer(state = initialState, action) {
     // Todos
     case POST_TODO:
       todo = { ...action.todo };
-      todoList = { todo, ...state.todoList };
+      todoList = [todo, ...state.todoList];
       return { ...state, todoList };
     case PUT_TODO:
       console.log("asdf");
