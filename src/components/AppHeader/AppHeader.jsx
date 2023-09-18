@@ -1,13 +1,11 @@
 const { Link, NavLink } = ReactRouterDOM;
 const { useSelector } = ReactRedux;
-const { useEffect } = React;
 
 export function AppHeader() {
-  const fullName = useSelector((state) => state.fullname);
+  const fullName = useSelector(
+    (state) => state.loggedInUser && state.loggedInUser.fullName
+  );
 
-  useEffect(() => {
-    console.log(fullName);
-  }, []);
   return (
     <header className="app-header flex align-center">
       <Link to="/">
